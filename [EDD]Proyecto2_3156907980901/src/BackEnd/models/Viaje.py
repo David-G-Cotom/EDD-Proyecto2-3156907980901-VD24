@@ -1,13 +1,22 @@
 import Cliente, Vehiculo, Ruta;
 
 class Viaje:
-    def __init__(self, origen: str, destino: str, fecha: str, cliente: Cliente, vehiculo: Vehiculo, ruta: Ruta):
+    def __init__(self,id: int, origen: str, destino: str, fecha: str, cliente: Cliente, vehiculo: Vehiculo, ruta: Ruta):
+        self.__id: int = id
         self.__origen: str = origen
         self.__destino: str = destino
         self.__fecha: str = fecha
         self.__cliente: Cliente = cliente
         self.__vehiculo: Vehiculo = vehiculo
         self.__ruta: Ruta = ruta
+
+
+
+    def get_id(self) -> int:
+        return self.__id
+
+    def set_id(self, id: int) -> None:
+        self.__id = id
 
 
 
