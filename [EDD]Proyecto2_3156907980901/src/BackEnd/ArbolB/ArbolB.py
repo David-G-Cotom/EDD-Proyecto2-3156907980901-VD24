@@ -44,6 +44,7 @@ class ArbolB:
                 posicion -= 1
 
             raiz_sub_arbol.get_claves()[posicion + 1] = nuevo_vehiculo
+            print("NUEVO VEHICULO REGISTRADO!!!")
         else:
             while posicion >= 0 and nuevo_vehiculo.get_placa() < raiz_sub_arbol.get_claves()[posicion].get_placa():
                 posicion -= 1
