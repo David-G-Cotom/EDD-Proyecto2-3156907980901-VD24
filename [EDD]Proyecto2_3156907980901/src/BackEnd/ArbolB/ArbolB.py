@@ -1,4 +1,4 @@
-from NodoArbolB import NodoArbolB
+from .NodoArbolB import NodoArbolB
 from ..models.Vehiculo import Vehiculo
 
 class ArbolB:

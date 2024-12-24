@@ -36,3 +36,8 @@ class Vehiculo:
     
     def set_precio(self, precio: float) -> None:
         self.__precio = precio
+
+
+
+    def __str__(self):
+        return f"PLACA:{self.__placa} MARCA:{self.__marca} MODELO:{self.__modelo} PRECIO:{self.__precio}"

@@ -1,5 +1,4 @@
 from ..models.Vehiculo import Vehiculo
-import NodoArbolB
 
 class NodoArbolB:
     def __init__(self, is_hoja: bool = False):
@@ -25,8 +24,8 @@ class NodoArbolB:
 
 
 
-    def get_hijos(self) -> list[NodoArbolB]:
+    def get_hijos(self):
         return self.__hijos
 
-    def set_hijos(self, hijos: list[NodoArbolB]) -> None:
+    def set_hijos(self, hijos) -> None:
         self.__hijos = hijos

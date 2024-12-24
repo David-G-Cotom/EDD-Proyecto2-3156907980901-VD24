@@ -55,7 +55,7 @@ class ListaClientes:
         if not self.is_vacia():
             nodo_aux: NodoListaDoble = self.__inicio
             if nodo_aux == self.__inicio and nodo_aux == self.__fin:
-                if nodo_nuevo.get_cliente().get_dpi() > nodo_aux.get_cliente().get_dpi:
+                if nodo_nuevo.get_cliente().get_dpi() > nodo_aux.get_cliente().get_dpi():
                     self.__insertar_final(nodo_nuevo)
                 else:
                     self.__insertar_inicio(nodo_nuevo)

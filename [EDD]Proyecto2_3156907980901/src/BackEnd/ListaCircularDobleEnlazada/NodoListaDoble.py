@@ -1,5 +1,4 @@
 from ..models.Cliente import Cliente
-from NodoListaDoble import NodoListaDoble
 
 class NodoListaDoble:
     def __init__(self, cliente: Cliente):
@@ -9,18 +8,18 @@ class NodoListaDoble:
 
 
 
-    def get_siguiente(self) -> NodoListaDoble:
+    def get_siguiente(self):
         return self.__siguiente
 
-    def set_siguiente(self, siguiente: NodoListaDoble) -> None:
+    def set_siguiente(self, siguiente) -> None:
         self.__siguiente = siguiente
 
     
 
-    def get_anterior(self) -> NodoListaDoble:
+    def get_anterior(self):
         return self.__anterior
     
-    def set_anterior(self, anterior: NodoListaDoble) -> None:
+    def set_anterior(self, anterior) -> None:
         self.__anterior = anterior
 
 

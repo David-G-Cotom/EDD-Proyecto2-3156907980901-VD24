@@ -54,3 +54,8 @@ class Cliente:
     
     def set_direccion(self, direccion: str) -> None:
         self.__direccion = direccion
+
+
+
+    def __str__(self):
+        return f"DPI:{self.__dpi} NOMBRE:{self.__nombre} APELLIDO:{self.__apellido} GENERO:{self.__genero} TELEFONO:{self.__telefono} DIRECCION:{self.__direccion}"
