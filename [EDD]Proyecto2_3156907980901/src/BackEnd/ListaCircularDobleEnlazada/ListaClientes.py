@@ -70,6 +70,7 @@ class ListaClientes:
                         return
                     
                     nodo_aux = nodo_aux.get_siguiente()
+                self.__insertar_final(nodo_nuevo)
         else:
             nodo_nuevo.set_siguiente(nodo_nuevo)
             nodo_nuevo.set_anterior(nodo_nuevo)

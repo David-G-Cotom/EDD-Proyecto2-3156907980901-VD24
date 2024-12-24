@@ -1,7 +1,9 @@
 from tkinter import Tk, Menu, filedialog
 from ..BackEnd.controllers.FileControl import FileControl
 from ..BackEnd.ArbolB.ArbolB import ArbolB
+from ..BackEnd.ArbolB.ReporteArbolB import ReporteArbolB
 from ..BackEnd.ListaCircularDobleEnlazada.ListaClientes import ListaClientes
+from ..BackEnd.ListaCircularDobleEnlazada.ReporteListaDoble import ReporteListaDoble
 
 class InterfazPrincipal:
     def __init__(self):
@@ -10,7 +12,9 @@ class InterfazPrincipal:
 
 
 arbol_vehiculos: ArbolB = ArbolB(5)
+reporte_arbol_b: ReporteArbolB = ReporteArbolB(arbol_vehiculos)
 lista_clientes: ListaClientes = ListaClientes()
+reporte_lista_doble: ReporteListaDoble = ReporteListaDoble(lista_clientes)
 
 ventana = Tk()
 ventana.title("Titulo de Prueba")
@@ -50,7 +54,7 @@ menu_cliente.add_command(label="Eliminar")
 menu_cliente.add_separator()
 menu_cliente.add_command(label="Mostrar Informacion")
 menu_cliente.add_separator()
-menu_cliente.add_command(label="Mostrar Estructura de Datos")
+menu_cliente.add_command(label="Mostrar Estructura de Datos", command=reporte_lista_doble.generar_reporte)
 menu_barra.add_cascade(label="Cliente", menu=menu_cliente)
 
 menu_vehiculo = Menu(menu_barra, tearoff=0)
@@ -62,7 +66,7 @@ menu_vehiculo.add_command(label="Eliminar")
 menu_vehiculo.add_separator()
 menu_vehiculo.add_command(label="Mostrar Informacion")
 menu_vehiculo.add_separator()
-menu_vehiculo.add_command(label="Mostrar Estructura de Datos")
+menu_vehiculo.add_command(label="Mostrar Estructura de Datos", command=reporte_arbol_b.generar_reporte)
 menu_barra.add_cascade(label="Vehiculo", menu=menu_vehiculo)
 
 menu_viaje = Menu(menu_barra, tearoff=0)
