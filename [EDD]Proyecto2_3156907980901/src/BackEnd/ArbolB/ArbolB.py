@@ -68,3 +68,23 @@ class ArbolB:
         if not hijo.get_is_hoja():
             nodo.set_hijos(hijo.get_hijos()[posicion_media + 1: (posicion_media*2) + 2])
             hijo.set_hijos(hijo.get_hijos()[0 : posicion_media + 1])
+
+
+
+    def __buscar_vehiculo(self, nodo: NodoArbolB, placa: str) -> Vehiculo:
+        i: int = 0
+        while i < self.__orden-1 and nodo.get_claves()[i].get_placa() < placa:
+            i += 1
+
+        if i < self.__orden-1 and nodo.get_claves()[i].get_placa() == placa:
+            return nodo.get_claves()[i]
+        
+        if nodo.get_is_hoja():
+            return None
+        
+        self.__buscar_vehiculo(nodo.get_hijos()[i], placa)
+
+
+
+    def __recorrer_arbol(self) -> None:
+        pass

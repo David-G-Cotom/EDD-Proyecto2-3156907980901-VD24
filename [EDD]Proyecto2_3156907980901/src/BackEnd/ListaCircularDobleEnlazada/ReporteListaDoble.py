@@ -10,27 +10,29 @@ class ReporteListaDoble:
 
     def generar_reporte(self) -> None:
         dot: str = "digraph {\nrankdir=LR;\nnode[shape=box];\n"
-        nodo_aux: NodoListaDoble = self.__lista_doble.get_inicio()
-        while True:
+        if not self.__lista_doble.is_vacia():
+            nodo_aux: NodoListaDoble = self.__lista_doble.get_inicio()
+            while True:
+                dot += f'"{nodo_aux.get_cliente().get_dpi()}\n'
+                dot += f'{nodo_aux.get_cliente().get_nombre()}"->\n'
+                nodo_aux = nodo_aux.get_siguiente()
+                if nodo_aux == self.__lista_doble.get_inicio(): break
+
+            if self.__lista_doble.get_inicio() != self.__lista_doble.get_fin():
+                dot += f'"{self.__lista_doble.get_inicio().get_cliente().get_dpi()}\n'
+                dot += f'{self.__lista_doble.get_inicio().get_cliente().get_nombre()}"->\n'
+
+            nodo_aux = self.__lista_doble.get_fin()
+            while True:
+                dot += f'"{nodo_aux.get_cliente().get_dpi()}\n'
+                dot += f'{nodo_aux.get_cliente().get_nombre()}"->\n'
+                nodo_aux = nodo_aux.get_anterior()
+                if nodo_aux.get_anterior() == self.__lista_doble.get_fin(): break
+
             dot += f'"{nodo_aux.get_cliente().get_dpi()}\n'
-            dot += f'{nodo_aux.get_cliente().get_nombre()}"->\n'
-            nodo_aux = nodo_aux.get_siguiente()
-            if nodo_aux == self.__lista_doble.get_inicio(): break
+            dot += f'{nodo_aux.get_cliente().get_nombre()}";'
 
-        if self.__lista_doble.get_inicio() != self.__lista_doble.get_fin():
-            dot += f'"{self.__lista_doble.get_inicio().get_cliente().get_dpi()}\n'
-            dot += f'{self.__lista_doble.get_inicio().get_cliente().get_nombre()}"->\n'
-
-        nodo_aux = self.__lista_doble.get_fin()
-        while True:
-            dot += f'"{nodo_aux.get_cliente().get_dpi()}\n'
-            dot += f'{nodo_aux.get_cliente().get_nombre()}"->\n'
-            nodo_aux = nodo_aux.get_anterior()
-            if nodo_aux.get_anterior() == self.__lista_doble.get_fin(): break
-
-        dot += f'"{nodo_aux.get_cliente().get_dpi()}\n'
-        dot += f'{nodo_aux.get_cliente().get_nombre()}"'
-        dot += ";\n}"
+        dot += "\n}"
         with open('./reports/ListaCircularDoble.txt', 'w') as file:
             file.write(dot)
 

@@ -61,7 +61,6 @@ menu_barra.add_cascade(label="Carga de Datos", menu=menu_datos)
 #---------------------------------------- MENU DEL CLIENTE ----------------------------------------#
 def __formulario_agregar_cliente():
     __limpiar_formulario()
-    #MOSTRAR LOS DATOS ACTUALES
     Label(frame_formulario, text="FORMULARIO PARA CREACION DE CLIENTE", foreground="red").grid(row=0, columnspan=2, padx=5, pady=5)
     Label(frame_formulario, text="DPI: ").grid(row=1, column=0, padx=5, pady=5)
     dpi = IntVar()
@@ -87,58 +86,77 @@ def __formulario_agregar_cliente():
     direccion = StringVar()
     direccion_entry = Entry(frame_formulario, textvariable=direccion)
     direccion_entry.grid(row=6, column=1, padx=5, pady=5)
-    Button(frame_formulario, text="Enviar", command=lambda: __procesar_agregar_cliente(dpi.get(), nombre.get(), apellidos.get(), genero.get(), telefono.get(), direccion.get())).grid(row=7, columnspan=3, pady=10)
+    Button(frame_formulario, text="Registrar", command=lambda: __procesar_agregar_cliente(dpi.get(), nombre.get(), apellidos.get(), genero.get(), telefono.get(), direccion.get())).grid(row=7, columnspan=3, pady=10)
 
 def __procesar_agregar_cliente(dpi: int, nombre: str, apellidos: str, genero: str, telefono: int, direccion: str):
     nuevo_cliente: Cliente = Cliente(dpi, nombre, apellidos, genero, telefono, direccion)
     lista_clientes.insertar_cliente(nuevo_cliente)
-    messagebox.showinfo("EXITO!!!", "Nuevo CLiente Registrado en el Sistema")
+    messagebox.showinfo("EXITO!!!", "Nuevo Cliente Registrado en el Sistema")
     __limpiar_formulario()
 
 
 
 def __formulario_modificar_cliente():
     __limpiar_formulario()
-    #MOSTRAR LOS DATOS ACTUALES
-    Label(frame_formulario, text="FORMULARIO PARA MODIFICACION DE CLIENTE", foreground="red").grid(row=0, columnspan=2, padx=5, pady=5)
-    Label(frame_formulario, text="DPI: ").grid(row=1, column=0, padx=5, pady=5)
-    dpi = IntVar()
-    dpi_entry = Entry(frame_formulario, textvariable=dpi)
-    dpi_entry.grid(row=1, column=1, padx=5, pady=5)
-    Button(frame_formulario, text="Enviar", command=lambda: __procesar_modificar_cliente(dpi.get())).grid(row=2, columnspan=3, pady=10)
+    if lista_clientes.mostrar_lista(frame_formulario):
+        Label(frame_formulario, text="FORMULARIO PARA MODIFICACION DE CLIENTE", foreground="red").grid(row=1, columnspan=2, padx=5, pady=5)
+        Label(frame_formulario, text="DPI: ").grid(row=2, column=0, padx=5, pady=5)
+        dpi = IntVar()
+        dpi_entry = Entry(frame_formulario, textvariable=dpi)
+        dpi_entry.grid(row=2, column=1, padx=5, pady=5)
+        Label(frame_formulario, text="Nombre:").grid(row=3, column=0, padx=5, pady=5)
+        nombre = StringVar()
+        nombre_entry: Entry = Entry(frame_formulario, textvariable=nombre)
+        nombre_entry.grid(row=3, column=1, padx=5, pady=5)
+        Label(frame_formulario, text="Apellidos: ").grid(row=4, column=0, padx=5, pady=5)
+        apellidos = StringVar()
+        apellidos_entry = Entry(frame_formulario, textvariable=apellidos)
+        apellidos_entry.grid(row=4, column=1, padx=5, pady=5)
+        Label(frame_formulario, text="Genero:").grid(row=5, column=0, padx=5, pady=5)
+        genero = StringVar()
+        genero_entry = Entry(frame_formulario, textvariable=genero)
+        genero_entry.grid(row=5, column=1, padx=5, pady=5)
+        Label(frame_formulario, text="Telefono: ").grid(row=6, column=0, padx=5, pady=5)
+        telefono = IntVar()
+        telefono_entry = Entry(frame_formulario, textvariable=telefono)
+        telefono_entry.grid(row=6, column=1, padx=5, pady=5)
+        Label(frame_formulario, text="Direccion:").grid(row=7, column=0, padx=5, pady=5)
+        direccion = StringVar()
+        direccion_entry = Entry(frame_formulario, textvariable=direccion)
+        direccion_entry.grid(row=7, column=1, padx=5, pady=5)
+        Button(frame_formulario, text="Modificar", command=lambda: __procesar_modificar_cliente(dpi.get(), nombre.get(), apellidos.get(), genero.get(), telefono.get(), direccion.get())).grid(row=8, columnspan=3, pady=10)
 
-def __procesar_modificar_cliente(dpi: int):
-    print(dpi)
+def __procesar_modificar_cliente(dpi: int, nombre: str, apellidos: str, genero: str, telefono: int, direccion: str):
+    cliente_modificado: Cliente = Cliente(dpi, nombre, apellidos, genero, telefono, direccion)
+    lista_clientes.modificar_cliente(cliente_modificado)
+    __limpiar_formulario()
 
 
 
 def __formulario_eliminar_cliente():
     __limpiar_formulario()
-    #MOSTRAR LOS DATOS ACTUALES
-    Label(frame_formulario, text="FORMULARIO PARA ELIMINACION DE CLIENTE", foreground="red").grid(row=0, columnspan=2, padx=5, pady=5)
-    Label(frame_formulario, text="DPI: ").grid(row=1, column=0, padx=5, pady=5)
-    dpi = IntVar()
-    dpi_entry = Entry(frame_formulario, textvariable=dpi)
-    dpi_entry.grid(row=1, column=1, padx=5, pady=5)
-    Button(frame_formulario, text="Enviar", command=lambda: __procesar_eliminar_cliente(dpi.get())).grid(row=2, columnspan=3, pady=10)
+    if lista_clientes.mostrar_lista(frame_formulario):
+        Label(frame_formulario, text="FORMULARIO PARA ELIMINACION DE CLIENTE", foreground="red").grid(row=1, columnspan=2, padx=5, pady=5)
+        Label(frame_formulario, text="DPI: ").grid(row=2, column=0, padx=5, pady=5)
+        dpi = IntVar()
+        dpi_entry = Entry(frame_formulario, textvariable=dpi)
+        dpi_entry.grid(row=2, column=1, padx=5, pady=5)
+        Button(frame_formulario, text="Eliminar", command=lambda: __procesar_eliminar_cliente(dpi.get())).grid(row=3, columnspan=3, pady=10)
 
 def __procesar_eliminar_cliente(dpi: int):
-    print(dpi)
+    lista_clientes.eliminar_cliente(dpi)
+    __limpiar_formulario()
 
 
 
 def __formulario_mostrar_informacion_cliente():
     __limpiar_formulario()
-    #MOSTRAR LOS DATOS ACTUALES
-    Label(frame_formulario, text="FORMULARIO PARA MOSTRAR INFORMACION DE CLIENTE", foreground="red").grid(row=0, columnspan=2, padx=5, pady=5)
-    Label(frame_formulario, text="DPI: ").grid(row=1, column=0, padx=5, pady=5)
-    dpi = IntVar()
-    dpi_entry = Entry(frame_formulario, textvariable=dpi)
-    dpi_entry.grid(row=1, column=1, padx=5, pady=5)
-    Button(frame_formulario, text="Enviar", command=lambda: __procesar_mostrar_informacion_cliente(dpi.get())).grid(row=2, columnspan=3, pady=10)
+    if lista_clientes.mostrar_dpis(frame_formulario):
+        Label(frame_formulario, text="FORMULARIO PARA MOSTRAR INFORMACION DE CLIENTE", foreground="red").grid(row=1, columnspan=2, padx=5, pady=5)
+        Button(frame_formulario, text="Mostrar Informacion", command=lambda: __procesar_mostrar_informacion_cliente()).grid(row=2, columnspan=3, pady=10)
 
-def __procesar_mostrar_informacion_cliente(dpi: int):
-    print(dpi)
+def __procesar_mostrar_informacion_cliente():
+    lista_clientes.mostrar_informacion()
 
 
 
@@ -161,7 +179,6 @@ menu_barra.add_cascade(label="Cliente", menu=menu_cliente)
 #---------------------------------------- MENU DE VEHICULO ----------------------------------------#
 def __formulario_agregar_vehiculo():
     __limpiar_formulario()
-    #MOSTRAR LOS DATOS ACTUALES
     Label(frame_formulario, text="FORMULARIO PARA CREACION DE VEHICULO", foreground="red").grid(row=0, columnspan=2, padx=5, pady=5)
     Label(frame_formulario, text="Placa: ").grid(row=1, column=0, padx=5, pady=5)
     placa = StringVar()
@@ -253,7 +270,6 @@ menu_barra.add_cascade(label="Vehiculo", menu=menu_vehiculo)
 #---------------------------------------- MENU DE VIAJES ----------------------------------------#
 def __formulario_agregar_viaje():
     __limpiar_formulario()
-    #MOSTRAR LOS DATOS ACTUALES
     Label(frame_formulario, text="FORMULARIO PARA CREACION DE VIAJE", foreground="red").grid(row=0, columnspan=2, padx=5, pady=5)
     Label(frame_formulario, text="Lugar de Origen: ").grid(row=1, column=0, padx=5, pady=5)
     origen = StringVar()
@@ -287,7 +303,6 @@ menu_barra.add_cascade(label="Viaje", menu=menu_viaje)
 #---------------------------------------- MENU DE RUTAS ----------------------------------------#
 def __formulario_agregar_ruta():
     __limpiar_formulario()
-    #MOSTRAR LOS DATOS ACTUALES
     Label(frame_formulario, text="FORMULARIO PARA CREACION DE RUTA", foreground="red").grid(row=0, columnspan=2, padx=5, pady=5)
     Label(frame_formulario, text="Lugar de Origen: ").grid(row=1, column=0, padx=5, pady=5)
     origen = StringVar()
