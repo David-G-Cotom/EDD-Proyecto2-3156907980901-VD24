@@ -1,6 +1,6 @@
 from .NodoListaDoble import NodoListaDoble
 from ..models.Cliente import Cliente
-from tkinter import Frame, messagebox, ttk, Label
+from tkinter import Frame, messagebox, ttk
 
 class ListaClientes:
     def __init__(self):

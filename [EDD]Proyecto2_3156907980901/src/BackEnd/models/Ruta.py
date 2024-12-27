@@ -22,8 +22,8 @@ class Ruta:
 
 
 
-    def get_tiempo(self) -> str:
+    def get_tiempo(self) -> int:
         return self.__tiempo
     
-    def set_tiempo(self, tiempo: str) -> None:
+    def set_tiempo(self, tiempo: int) -> None:
         self.__tiempo = tiempo

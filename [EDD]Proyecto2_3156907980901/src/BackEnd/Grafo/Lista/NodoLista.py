@@ -1,23 +1,21 @@
-from ..Vertice import Vertice
-import NodoLista
-
 class NodoLista:
-    def __init__(self, value: Vertice):
-        self.__value: Vertice = value
+    def __init__(self, valor_vertice):
+        from ..Vertice import Vertice
+        self.__valor_vertice: Vertice = valor_vertice
         self.__siguiente: NodoLista = None
 
 
 
-    def get_value(self) -> Vertice:
-        return self.__value
+    def get_valor_vertice(self):
+        return self.__valor_vertice
 
-    def set_value(self, value: Vertice) -> None:
-        self.__value = value
+    def set_valor_vertice(self, valor_vertice) -> None:
+        self.__valor_vertice = valor_vertice
 
 
 
-    def get_siguiente(self) -> NodoLista:
+    def get_siguiente(self):
         return self.__siguiente
 
-    def set_siguiente(self, siguiente: NodoLista) -> None:
+    def set_siguiente(self, siguiente) -> None:
         self.__siguiente = siguiente

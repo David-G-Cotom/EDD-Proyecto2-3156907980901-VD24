@@ -4,6 +4,8 @@ from ..BackEnd.ArbolB.ArbolB import ArbolB
 from ..BackEnd.ArbolB.ReporteArbolB import ReporteArbolB
 from ..BackEnd.ListaCircularDobleEnlazada.ListaClientes import ListaClientes
 from ..BackEnd.ListaCircularDobleEnlazada.ReporteListaDoble import ReporteListaDoble
+from ..BackEnd.Grafo.ListaAdyacencia import ListaAdyacencia
+from ..BackEnd.Grafo.ReporteGrafo import ReporteGrafo
 from ..BackEnd.models.Cliente import Cliente
 from ..BackEnd.models.Vehiculo import Vehiculo
 
@@ -24,6 +26,8 @@ arbol_vehiculos: ArbolB = ArbolB(5)
 reporte_arbol_b: ReporteArbolB = ReporteArbolB(arbol_vehiculos)
 lista_clientes: ListaClientes = ListaClientes()
 reporte_lista_doble: ReporteListaDoble = ReporteListaDoble(lista_clientes)
+lista_adyacente: ListaAdyacencia = ListaAdyacencia()
+reporte_grafo: ReporteGrafo = ReporteGrafo(lista_adyacente)
 
 ventana = Tk()
 ventana.title("Titulo de Prueba")
@@ -40,7 +44,7 @@ def __cargar_archivo(tipo_archivo: int):
                 contenido = archivo.read()
                 if tipo_archivo == 1: controlador_archivos.procesar_clientes(contenido, lista_clientes)
                 elif tipo_archivo == 2: controlador_archivos.procesar_vehiculos(contenido, arbol_vehiculos)
-                elif tipo_archivo == 3: controlador_archivos.procesar_rutas(contenido)
+                elif tipo_archivo == 3: controlador_archivos.procesar_rutas(contenido, lista_adyacente)
         except Exception as e:
             print(f"Error al leer el archivo: {e}")
 
@@ -232,7 +236,9 @@ def __formulario_eliminar_vehiculo():
     Button(frame_formulario, text="Enviar", command=lambda: __procesar_eliminar_vehiculo(placa)).grid(row=2, columnspan=3, pady=10)
 
 def __procesar_eliminar_vehiculo(placa: str):
-    print(placa)
+    vehiculo_eliminar: Vehiculo = Vehiculo(placa, "", 0, 0)
+    arbol_vehiculos.eliminar_vehiculo(arbol_vehiculos.get_raiz(), vehiculo_eliminar)
+    __limpiar_formulario()
 
 
 
@@ -377,7 +383,7 @@ menu_ruta.add_command(label="Eliminar", command=__formulario_eliminar_ruta)
 menu_ruta.add_separator()
 menu_ruta.add_command(label="Mostrar Informacion", command=__formulario_mostrar_informacion_ruta)
 menu_ruta.add_separator()
-menu_ruta.add_command(label="Mostrar Estructura de Datos")
+menu_ruta.add_command(label="Mostrar Estructura de Datos", command=reporte_grafo.generar_reporte)
 menu_barra.add_cascade(label="Ruta", menu=menu_ruta)
 
 #---------------------------------------- REPORTES ----------------------------------------#

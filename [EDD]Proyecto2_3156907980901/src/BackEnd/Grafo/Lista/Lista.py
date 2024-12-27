@@ -1,5 +1,4 @@
-from NodoLista import NodoLista
-from ..Vertice import Vertice
+from .NodoLista import NodoLista
 
 class Lista:
     def __init__(self):
@@ -15,28 +14,28 @@ class Lista:
 
 
 
-    def insertar_final(self, value: Vertice) -> NodoLista:
-        aux: NodoLista = self.__inicio
-        if aux == None:
-            aux = NodoLista(value)
-            self.__inicio = aux
+    def insertar_final(self, valor_vertice) -> NodoLista:
+        nodo_aux: NodoLista = self.__inicio
+        if nodo_aux == None:
+            nodo_aux = NodoLista(valor_vertice)
+            self.__inicio = nodo_aux
             return self.__inicio
         
-        while aux.get_siguiente() != None:
-            aux = aux.get_siguiente()
+        while nodo_aux.get_siguiente() != None:
+            nodo_aux = nodo_aux.get_siguiente()
 
-        aux.get_siguiente() = NodoLista(value)
-        return aux.get_siguiente()
+        nodo_aux.set_siguiente(NodoLista(valor_vertice))
+        return nodo_aux.get_siguiente()
 
 
 
-    def buscar_vertice(self, value: Vertice) -> NodoLista:
+    def buscar_nodo(self, valor_vertice) -> NodoLista:
         aux: NodoLista = self.__inicio
         if aux == None:
             return None
         
         while aux != None:
-            if aux.get_value().get_value() == value.get_value():
+            if aux.get_valor_vertice().get_valor() == valor_vertice.get_valor():
                 return aux
             
             aux = aux.get_siguiente()

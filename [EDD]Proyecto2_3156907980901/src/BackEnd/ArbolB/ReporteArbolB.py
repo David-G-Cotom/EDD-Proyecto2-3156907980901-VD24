@@ -31,9 +31,9 @@ class ReporteArbolB:
         contador: int = 0
         for clave in raiz_sub_arbol.get_claves():
             if contador == len(raiz_sub_arbol.get_claves())-1:
-                contenido_arbol += f"<f{contador}>|{clave}|<f{contador + 1}>"
+                contenido_arbol += f"<f{contador}>|{clave.get_placa()}|<f{contador + 1}>"
                 break
-            contenido_arbol += f"<f{contador}>|{clave}|"
+            contenido_arbol += f"<f{contador}>|{clave.get_placa()}|"
             contador += 1
         contenido_arbol += '"];\n\t'
 
