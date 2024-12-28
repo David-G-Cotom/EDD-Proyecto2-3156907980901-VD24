@@ -173,7 +173,7 @@ menu_cliente.add_command(label="Eliminar", command=__formulario_eliminar_cliente
 menu_cliente.add_separator()
 menu_cliente.add_command(label="Mostrar Informacion", command=__formulario_mostrar_informacion_cliente)
 menu_cliente.add_separator()
-menu_cliente.add_command(label="Mostrar Estructura de Datos", command=reporte_lista_doble.generar_reporte)
+menu_cliente.add_command(label="Mostrar Estructura de Datos", command=lambda: reporte_lista_doble.generar_reporte(frame_formulario))
 menu_barra.add_cascade(label="Cliente", menu=menu_cliente)
 
 
@@ -266,7 +266,7 @@ menu_vehiculo.add_command(label="Eliminar", command=__formulario_eliminar_vehicu
 menu_vehiculo.add_separator()
 menu_vehiculo.add_command(label="Mostrar Informacion", command=__formulario_mostrar_informacion_vehiculo)
 menu_vehiculo.add_separator()
-menu_vehiculo.add_command(label="Mostrar Estructura de Datos", command=reporte_arbol_b.generar_reporte)
+menu_vehiculo.add_command(label="Mostrar Estructura de Datos", command=lambda: reporte_arbol_b.generar_reporte(frame_formulario))
 menu_barra.add_cascade(label="Vehiculo", menu=menu_vehiculo)
 
 
@@ -307,83 +307,8 @@ menu_barra.add_cascade(label="Viaje", menu=menu_viaje)
 
 
 #---------------------------------------- MENU DE RUTAS ----------------------------------------#
-def __formulario_agregar_ruta():
-    __limpiar_formulario()
-    Label(frame_formulario, text="FORMULARIO PARA CREACION DE RUTA", foreground="red").grid(row=0, columnspan=2, padx=5, pady=5)
-    Label(frame_formulario, text="Lugar de Origen: ").grid(row=1, column=0, padx=5, pady=5)
-    origen = StringVar()
-    origen_entry = Entry(frame_formulario, textvariable=origen)
-    origen_entry.grid(row=1, column=1, padx=5, pady=5)
-    Label(frame_formulario, text="Lugar de Destino:").grid(row=2, column=0, padx=5, pady=5)
-    destino = StringVar()
-    destino_entry = Entry(frame_formulario, textvariable=destino)
-    destino_entry.grid(row=2, column=1, padx=5, pady=5)
-    Label(frame_formulario, text="Tiempo de Ruta: ").grid(row=3, column=0, padx=5, pady=5)
-    tiempo = IntVar()
-    tiempo_entry = Entry(frame_formulario, textvariable=tiempo)
-    tiempo_entry.grid(row=3, column=1, padx=5, pady=5)
-    Button(frame_formulario, text="Enviar", command=lambda: __procesar_agregar_ruta(origen.get(), destino.get(), tiempo.get())).grid(row=4, columnspan=3, pady=10)
-
-def __procesar_agregar_ruta(origen: str, destino: str, tiempo: int):
-    pass
-
-
-
-def __formulario_modificar_ruta():
-    __limpiar_formulario()
-    #MOSTRAR LOS DATOS ACTUALES
-    Label(frame_formulario, text="FORMULARIO PARA MODIFICACION DE RUTA", foreground="red").grid(row=0, columnspan=2, padx=5, pady=5)
-    Label(frame_formulario, text="Numero: ").grid(row=1, column=0, padx=5, pady=5)
-    numero = StringVar()
-    numero_entry = Entry(frame_formulario, textvariable=numero)
-    numero_entry.grid(row=1, column=1, padx=5, pady=5)
-    Button(frame_formulario, text="Enviar", command=lambda: __procesar_modificar_ruta(numero.get())).grid(row=2, columnspan=3, pady=10)
-
-def __procesar_modificar_ruta(numero: str):
-    pass
-
-
-
-def __formulario_eliminar_ruta():
-    __limpiar_formulario()
-    #MOSTRAR LOS DATOS ACTUALES
-    Label(frame_formulario, text="FORMULARIO PARA ELIMINACION DE RUTA", foreground="red").grid(row=0, columnspan=2, padx=5, pady=5)
-    Label(frame_formulario, text="Numero: ").grid(row=1, column=0, padx=5, pady=5)
-    numero = StringVar()
-    numero_entry = Entry(frame_formulario, textvariable=numero)
-    numero_entry.grid(row=1, column=1, padx=5, pady=5)
-    Button(frame_formulario, text="Enviar", command=lambda: __procesar_eliminar_ruta(numero.get())).grid(row=2, columnspan=3, pady=10)
-
-def __procesar_eliminar_ruta(numero: str):
-    pass
-
-
-
-def __formulario_mostrar_informacion_ruta():
-    __limpiar_formulario()
-    #MOSTRAR LOS DATOS ACTUALES
-    Label(frame_formulario, text="FORMULARIO PARA MOSTRAR INFORMACION DE RUTA", foreground="red").grid(row=0, columnspan=2, padx=5, pady=5)
-    Label(frame_formulario, text="Numero: ").grid(row=1, column=0, padx=5, pady=5)
-    numero = StringVar()
-    numero_entry = Entry(frame_formulario, textvariable=numero)
-    numero_entry.grid(row=1, column=1, padx=5, pady=5)
-    Button(frame_formulario, text="Enviar", command=lambda: __procesar_mostrar_informacion_ruta(numero.get())).grid(row=2, columnspan=3, pady=10)
-
-def __procesar_mostrar_informacion_ruta(numero: str):
-    pass
-
-
-
 menu_ruta = Menu(menu_barra, tearoff=0)
-menu_ruta.add_command(label="Agregar/Crear", command=__formulario_agregar_ruta)
-menu_ruta.add_separator()
-menu_ruta.add_command(label="Modificar", command=__formulario_modificar_ruta)
-menu_ruta.add_separator()
-menu_ruta.add_command(label="Eliminar", command=__formulario_eliminar_ruta)
-menu_ruta.add_separator()
-menu_ruta.add_command(label="Mostrar Informacion", command=__formulario_mostrar_informacion_ruta)
-menu_ruta.add_separator()
-menu_ruta.add_command(label="Mostrar Estructura de Datos", command=reporte_grafo.generar_reporte)
+menu_ruta.add_command(label="Mostrar Estructura de Datos", command=lambda: reporte_grafo.generar_reporte(frame_formulario))
 menu_barra.add_cascade(label="Ruta", menu=menu_ruta)
 
 #---------------------------------------- REPORTES ----------------------------------------#

@@ -1,6 +1,8 @@
 from .ListaClientes import ListaClientes
 from .NodoListaDoble import NodoListaDoble
 import os
+from tkinter import Frame, Label
+from PIL import Image, ImageTk
 
 class ReporteListaDoble:
     def __init__(self, lista_doble: ListaClientes):
@@ -8,7 +10,7 @@ class ReporteListaDoble:
 
 
 
-    def generar_reporte(self) -> None:
+    def generar_reporte(self, formulario_frame: Frame) -> None:
         dot: str = "digraph {\nrankdir=LR;\nnode[shape=box];\n"
         if not self.__lista_doble.is_vacia():
             nodo_aux: NodoListaDoble = self.__lista_doble.get_inicio()
@@ -36,6 +38,19 @@ class ReporteListaDoble:
         with open('./reports/ListaCircularDoble.txt', 'w') as file:
             file.write(dot)
 
-        resultado: int = os.system(f"dot -Tpng reports\\ListaCircularDoble.txt -o reports\\ListaCircularDoble.png")
-        if resultado == 0:
+        resultadoPNG: int = os.system(f"dot -Tpng reports\\ListaCircularDoble.txt -o reports\\ListaCircularDoble.png")
+        resultadoPDF: int = os.system(f"dot -Tpdf reports\\ListaCircularDoble.txt -o reports\\ListaCircularDoble.pdf")
+        if resultadoPNG == 0 and resultadoPDF == 0:
             print("Reporte generado exitosamente!!!")
+            self.__mostrar_imagen(formulario_frame)
+
+
+
+    def __mostrar_imagen(self, formulario_frame: Frame) -> None:
+        for widget in formulario_frame.winfo_children():
+            widget.destroy()
+        img = Image.open('./reports/ListaCircularDoble.png')
+        pimg = ImageTk.PhotoImage(img)
+        formulario_frame.pimg = pimg
+        Label(formulario_frame, image=pimg).grid(row=0)
+        print("Imagen Cargada Exitosamente!!!")

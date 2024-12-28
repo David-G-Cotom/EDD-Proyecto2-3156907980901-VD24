@@ -5,6 +5,8 @@ class Vertice:
         self.__valor: str = valor
         self.__vecinos: Lista[Vertice] = Lista()
         self.__peso: int = peso
+        self.__peso_acumulado: int = 0
+        self.__is_visitado: bool = False
 
 
 
@@ -29,6 +31,25 @@ class Vertice:
 
     def set_peso(self, peso: int) -> None:
         self.__peso = peso
+
+
+
+    def get_peso_acumulado(self) -> int:
+        return self.__peso_acumulado
+
+    def set_peso_acumulado(self, peso_acumulado: int) -> None:
+        self.__peso_acumulado = peso_acumulado
+
+    def actualizar_peso_acumulado(self, peso_acumulado_anterior: int) -> None:
+        self.__peso_acumulado += peso_acumulado_anterior
+
+
+
+    def get_is_visitado(self) -> bool:
+        return self.__is_visitado
+
+    def set_is_visitado(self, is_visitado: bool) -> None:
+        self.__is_visitado = is_visitado
 
 
 

@@ -1,6 +1,8 @@
 from .ArbolB import ArbolB
 from .NodoArbolB import NodoArbolB
 import os
+from tkinter import Frame, Label
+from PIL import Image, ImageTk
 
 
 class ReporteArbolB:
@@ -9,7 +11,7 @@ class ReporteArbolB:
 
 
 
-    def generar_reporte(self) -> None:
+    def generar_reporte(self, formulario_frame: Frame) -> None:
         dot: str = '''digraph G {\n\tbgcolor="#1a1a1a";
             fontcolor=white;\n\tnodesep=0.5;\n\tsplines=false
             node [shape=record width=1.2 style=filled fillcolor="#313638" fontcolor=white];
@@ -19,9 +21,11 @@ class ReporteArbolB:
         with open('./reports/ArbolB.txt', 'w') as file:
             file.write(dot)
 
-        resultado: int = os.system(f"dot -Tpng reports\\ArbolB.txt -o reports\\ArbolB.png")
-        if resultado == 0:
+        resultadoPNG: int = os.system(f"dot -Tpng reports\\ArbolB.txt -o reports\\ArbolB.png")
+        resultadoPDF: int = os.system(f"dot -Tpdf reports\\ArbolB.txt -o reports\\ArbolB.pdf")
+        if resultadoPNG == 0 and resultadoPDF == 0:
             print("Reporte generado exitosamente!!!")
+            self.__mostrar_imagen(formulario_frame)
     
 
 
@@ -46,3 +50,14 @@ class ReporteArbolB:
             contador += 1
 
         return contenido_arbol
+    
+
+
+    def __mostrar_imagen(self, formulario_frame: Frame) -> None:
+        for widget in formulario_frame.winfo_children():
+            widget.destroy()
+        img = Image.open('./reports/ArbolB.png')
+        pimg = ImageTk.PhotoImage(img)
+        formulario_frame.pimg = pimg
+        Label(formulario_frame, image=pimg).grid(row=0)
+        print("Imagen Cargada Exitosamente!!!")

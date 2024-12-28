@@ -44,8 +44,8 @@ class FileControl:
         print("PROCESANDO RUTAS...")
         lineas: list[str] = contenido.split("%")
         for linea in lineas:
-            if linea.__contains__("\n"):
-                linea = linea.replace("\n", "")
+            if linea.__contains__("\n"): linea = linea.replace("\n", "")
+            if linea.__contains__(" "): linea = linea.replace(" ", "")
             if linea != "":
                 contenido: list[str] = linea.split("/")
                 ruta: Ruta = Ruta(contenido[0], contenido[1], int(contenido[2]))
