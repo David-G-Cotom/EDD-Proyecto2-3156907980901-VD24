@@ -89,8 +89,8 @@ class ArbolB:
             if i<len(nodo.get_claves()) and nodo.get_claves()[i].get_placa()==vehiculo.get_placa():
                 return self.__eliminar_nodo_interno(nodo, vehiculo, i)
             # EL VEHICULO NO ESTA EN EL NODO, VAMOS AL NODO HIJO
-            if len(nodo.get_hijos()[i].get_claves()) < self.__orden:
-                self.__rellenar_nodo(nodo, i)
+            if len(nodo.get_hijos()[i].get_claves()) < self.__orden/2:
+                i = self.__rellenar_nodo(nodo, i)
 
             self.eliminar_vehiculo(nodo.get_hijos()[i], vehiculo)
 
@@ -98,12 +98,12 @@ class ArbolB:
 
     def __eliminar_nodo_interno(self, raiz_sub_arbol: NodoArbolB, vehiculo: Vehiculo, posicion: int) -> None:
         # EL HIJO IZQUIERDO DEL NODO ACTUAL YA TIENE EL NUMERO MAXIMO DE CLAVES
-        if len(raiz_sub_arbol.get_hijos()[posicion].get_claves()) >= self.__orden:
+        if len(raiz_sub_arbol.get_hijos()[posicion].get_claves()) >= self.__orden/2:
             clave_anterior: Vehiculo = self.__get_clave_anterior(raiz_sub_arbol, posicion)
             raiz_sub_arbol.get_claves()[posicion] = clave_anterior
             self.eliminar_vehiculo(raiz_sub_arbol.get_hijos()[posicion], clave_anterior)
         # EL HIJO DERECHO DEL NODO ACTUAL YA TIENE EL NUMERO MAXIMO DE CLAVES
-        elif len(raiz_sub_arbol.get_hijos()[posicion + 1].get_claves()) >= self.__orden:
+        elif len(raiz_sub_arbol.get_hijos()[posicion + 1].get_claves()) >= self.__orden/2:
             clave_siguiente: Vehiculo = self.__get_clave_siguiente(raiz_sub_arbol, posicion)
             raiz_sub_arbol.get_claves()[posicion] = clave_siguiente
             self.eliminar_vehiculo(raiz_sub_arbol.get_hijos()[posicion + 1], clave_siguiente)
@@ -148,7 +148,7 @@ class ArbolB:
 
 
 
-    def __rellenar_nodo(self, nodo: NodoArbolB, posicion: int) -> None:
+    def __rellenar_nodo(self, nodo: NodoArbolB, posicion: int) -> int:
         if posicion!=0 and len(nodo.get_hijos()[posicion - 1].get_claves())>=self.__orden:
             self.__prestar_clave_de_anterior(nodo, posicion)
         elif posicion!=len(nodo.get_hijos())-1 and len(nodo.get_hijos()[posicion+1].get_claves())>=self.__orden:
@@ -158,6 +158,8 @@ class ArbolB:
                 self.__unir_hijos(nodo, posicion)
             else:
                 self.__unir_hijos(nodo, posicion - 1)
+                return posicion - 1
+        return posicion
 
 
 
@@ -187,16 +189,20 @@ class ArbolB:
 
     def __buscar_vehiculo(self, nodo: NodoArbolB, placa: str) -> Vehiculo:
         i: int = 0
-        while i < self.__orden-1 and nodo.get_claves()[i].get_placa() < placa:
-            i += 1
+        if nodo.get_is_hoja():
+            while i < len(nodo.get_claves())-1 and nodo.get_claves()[i].get_placa() < placa:
+                i += 1
+        else:
+            while i < len(nodo.get_hijos())-1 and nodo.get_claves()[i].get_placa() < placa:
+                i += 1
 
-        if i < self.__orden-1 and nodo.get_claves()[i].get_placa() == placa:
+        if i <= len(nodo.get_claves())-1 and nodo.get_claves()[i].get_placa() == placa:
             return nodo.get_claves()[i]
         
         if nodo.get_is_hoja():
             return None
         
-        self.__buscar_vehiculo(nodo.get_hijos()[i], placa)
+        return self.__buscar_vehiculo(nodo.get_hijos()[i], placa)
 
 
 

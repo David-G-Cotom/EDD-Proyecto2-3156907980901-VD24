@@ -62,7 +62,7 @@ class ListaClientes:
                     self.__insertar_inicio(nodo_nuevo)
             else:
                 while nodo_aux != self.__fin:
-                    if nodo_nuevo.get_cliente().get_dpi() > nodo_aux.get_cliente().get_dpi() and nodo_nuevo.get_cliente().get_dpi() < nodo_aux.get_cliente().get_dpi():
+                    if nodo_nuevo.get_cliente().get_dpi() > nodo_aux.get_cliente().get_dpi() and nodo_nuevo.get_cliente().get_dpi() < nodo_aux.get_siguiente().get_cliente().get_dpi():
                         self.__insertar_medio(nodo_nuevo, nodo_aux.get_siguiente())
                         print("NUEVO CLIENTE REGISTRADO!!!")
                         return

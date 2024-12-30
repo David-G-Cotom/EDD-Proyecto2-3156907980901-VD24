@@ -30,7 +30,7 @@ lista_adyacente: ListaAdyacencia = ListaAdyacencia()
 reporte_grafo: ReporteGrafo = ReporteGrafo(lista_adyacente)
 
 ventana = Tk()
-ventana.title("Titulo de Prueba")
+ventana.title("Llega Rapidito App")
 ventana.geometry("1200x800")
 menu_barra = Menu(ventana, tearoff=0)
 
@@ -247,7 +247,7 @@ def __formulario_eliminar_vehiculo():
     placa = StringVar()
     placa_entry = Entry(frame_formulario, textvariable=placa)
     placa_entry.grid(row=2, column=1, padx=5, pady=5)
-    Button(frame_formulario, text="Eliminar", command=lambda: __procesar_eliminar_vehiculo(placa)).grid(row=3, columnspan=3, pady=10)
+    Button(frame_formulario, text="Eliminar", command=lambda: __procesar_eliminar_vehiculo(placa.get())).grid(row=3, columnspan=3, pady=10)
 
 def __procesar_eliminar_vehiculo(placa: str):
     vehiculo_eliminar: Vehiculo = Vehiculo(placa, "", 0, 0)
@@ -305,7 +305,6 @@ def __formulario_agregar_viaje():
     placa_entry.grid(row=4, column=1, padx=5, pady=5)
     Button(frame_formulario, text="Enviar", command=lambda: __procesar_agregar_viaje(origen.get(), destino.get(), dpi.get(), placa.get())).grid(row=5, columnspan=3, pady=10)
     #SE DEBE MOSTRAR EL VIAJE EN GRAPHIZ
-    #ELIMINAR LA OPCION DE MOSTRAR ESTRUCTURA DE DATOS
 
 def __procesar_agregar_viaje(origen: str, destino: str, doi: int, placa: str):
     pass
@@ -327,15 +326,15 @@ menu_barra.add_cascade(label="Ruta", menu=menu_ruta)
 
 #---------------------------------------- REPORTES ----------------------------------------#
 menu_reporte = Menu(menu_barra, tearoff=0)
-menu_reporte.add_command(label="Top Viajes")
+menu_reporte.add_command(label="Top Viajes", command=lambda: messagebox.showwarning("NO DISPONIBLE", "El Reporte de Top de Viajes todavia no se encuentran disponibles :("))
 menu_reporte.add_separator()
-menu_reporte.add_command(label="Top Ganancias")
+menu_reporte.add_command(label="Top Ganancias", command=lambda: messagebox.showwarning("NO DISPONIBLE", "El Reporte de Top de Ganancias todavia no se encuentran disponibles :("))
 menu_reporte.add_separator()
-menu_reporte.add_command(label="Top Clientes")
+menu_reporte.add_command(label="Top Clientes", command=lambda: messagebox.showwarning("NO DISPONIBLE", "El Reporte de Top de Clientes todavia no se encuentran disponibles :("))
 menu_reporte.add_separator()
-menu_reporte.add_command(label="Top Vehiculos")
+menu_reporte.add_command(label="Top Vehiculos", command=lambda: messagebox.showwarning("NO DISPONIBLE", "El Reporte de Top de Vehiculos todavia no se encuentran disponibles :("))
 menu_reporte.add_separator()
-menu_reporte.add_command(label="Ruta de un Viaje")
+menu_reporte.add_command(label="Ruta de un Viaje", command=lambda: messagebox.showwarning("NO DISPONIBLE", "Las Rutas de un Viaje todavia no se encuentran disponibles :("))
 menu_barra.add_cascade(label="Reportes", menu=menu_reporte)
 
 #---------------------------------------- RENDERIZACION ----------------------------------------#
