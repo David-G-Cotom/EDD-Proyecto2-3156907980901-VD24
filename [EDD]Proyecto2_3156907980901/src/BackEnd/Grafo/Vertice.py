@@ -1,12 +1,12 @@
 from .Lista.Lista import Lista
 
 class Vertice:
-    def __init__(self, valor: str, peso: int = 0):
+    def __init__(self, valor: str, peso: int = 0, padre = None):
         self.__valor: str = valor
         self.__vecinos: Lista[Vertice] = Lista()
         self.__peso: int = peso
         self.__peso_acumulado: int = 0
-        self.__is_visitado: bool = False
+        self.__padre: Vertice = padre
 
 
 
@@ -45,11 +45,11 @@ class Vertice:
 
 
 
-    def get_is_visitado(self) -> bool:
-        return self.__is_visitado
+    def get_padre(self):
+        return self.__padre
 
-    def set_is_visitado(self, is_visitado: bool) -> None:
-        self.__is_visitado = is_visitado
+    def set_padre(self, padre) -> None:
+        self.__padre = padre
 
 
 
@@ -62,3 +62,10 @@ class Vertice:
             nodo_aux = nodo_aux.get_siguiente()
 
         return dot
+    
+
+
+    def agregar_vecino(self, valor: str, peso: int) -> None:
+        vecino: Vertice = Vertice(valor, peso)
+        vecino.actualizar_peso_acumulado(peso)
+        self.__vecinos.insertar_frente(vecino)

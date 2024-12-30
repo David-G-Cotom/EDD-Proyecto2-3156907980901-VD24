@@ -200,7 +200,7 @@ def __formulario_agregar_vehiculo():
     precio = DoubleVar()
     precio_entry = Entry(frame_formulario, textvariable=precio)
     precio_entry.grid(row=4, column=1, padx=5, pady=5)
-    Button(frame_formulario, text="Enviar", command=lambda: __procesar_agregar_vehiculo(placa.get(), marca.get(), modelo.get(), precio.get())).grid(row=5, columnspan=3, pady=10)
+    Button(frame_formulario, text="Registrar", command=lambda: __procesar_agregar_vehiculo(placa.get(), marca.get(), modelo.get(), precio.get())).grid(row=5, columnspan=3, pady=10)
 
 def __procesar_agregar_vehiculo(placa: str, marca: str, modelo: int, precio: float):
     nuevo_vehiculo: Vehiculo = Vehiculo(placa, marca, modelo, precio)
@@ -212,28 +212,42 @@ def __procesar_agregar_vehiculo(placa: str, marca: str, modelo: int, precio: flo
 
 def __formulario_modificar_vehiculo():
     __limpiar_formulario()
-    #MOSTRAR LOS DATOS ACTUALES
-    Label(frame_formulario, text="FORMULARIO PARA MODIFICACION DE VEHICULO", foreground="red").grid(row=0, columnspan=2, padx=5, pady=5)
-    Label(frame_formulario, text="Placa: ").grid(row=1, column=0, padx=5, pady=5)
+    arbol_vehiculos.recorrer_arbol(frame_formulario)
+    Label(frame_formulario, text="FORMULARIO PARA MODIFICACION DE VEHICULO", foreground="red").grid(row=1, columnspan=2, padx=5, pady=5)
+    Label(frame_formulario, text="Placa: ").grid(row=2, column=0, padx=5, pady=5)
     placa = StringVar()
     placa_entry = Entry(frame_formulario, textvariable=placa)
-    placa_entry.grid(row=1, column=1, padx=5, pady=5)
-    Button(frame_formulario, text="Enviar", command=lambda: __procesar_modificar_vehiculo(placa)).grid(row=2, columnspan=3, pady=10)
+    placa_entry.grid(row=2, column=1, padx=5, pady=5)
+    Label(frame_formulario, text="Marca:").grid(row=3, column=0, padx=5, pady=5)
+    marca = StringVar()
+    marca_entry = Entry(frame_formulario, textvariable=marca)
+    marca_entry.grid(row=3, column=1, padx=5, pady=5)
+    Label(frame_formulario, text="Modelo: ").grid(row=4, column=0, padx=5, pady=5)
+    modelo = IntVar()
+    modelo_entry = Entry(frame_formulario, textvariable=modelo)
+    modelo_entry.grid(row=4, column=1, padx=5, pady=5)
+    Label(frame_formulario, text="Precio:").grid(row=5, column=0, padx=5, pady=5)
+    precio = DoubleVar()
+    precio_entry = Entry(frame_formulario, textvariable=precio)
+    precio_entry.grid(row=5, column=1, padx=5, pady=5)
+    Button(frame_formulario, text="Modificar", command=lambda: __procesar_modificar_vehiculo(placa.get(), marca.get(), modelo.get(), precio.get())).grid(row=6, columnspan=3, pady=10)
 
-def __procesar_modificar_vehiculo(placa: str):
-    print(placa)
+def __procesar_modificar_vehiculo(placa: str, marca: str, modelo: int, precio: float):
+    vehiculo_modificado: Vehiculo = Vehiculo(placa, marca, modelo, precio)
+    arbol_vehiculos.modificar_vehiculo(vehiculo_modificado)
+    __limpiar_formulario()
 
 
 
 def __formulario_eliminar_vehiculo():
     __limpiar_formulario()
-    #MOSTRAR LOS DATOS ACTUALES
-    Label(frame_formulario, text="FORMULARIO PARA ELIMINACION DE VEHICULO", foreground="red").grid(row=0, columnspan=2, padx=5, pady=5)
-    Label(frame_formulario, text="Placa: ").grid(row=1, column=0, padx=5, pady=5)
+    arbol_vehiculos.recorrer_arbol(frame_formulario)
+    Label(frame_formulario, text="FORMULARIO PARA ELIMINACION DE VEHICULO", foreground="red").grid(row=1, columnspan=2, padx=5, pady=5)
+    Label(frame_formulario, text="Placa: ").grid(row=2, column=0, padx=5, pady=5)
     placa = StringVar()
     placa_entry = Entry(frame_formulario, textvariable=placa)
-    placa_entry.grid(row=1, column=1, padx=5, pady=5)
-    Button(frame_formulario, text="Enviar", command=lambda: __procesar_eliminar_vehiculo(placa)).grid(row=2, columnspan=3, pady=10)
+    placa_entry.grid(row=2, column=1, padx=5, pady=5)
+    Button(frame_formulario, text="Eliminar", command=lambda: __procesar_eliminar_vehiculo(placa)).grid(row=3, columnspan=3, pady=10)
 
 def __procesar_eliminar_vehiculo(placa: str):
     vehiculo_eliminar: Vehiculo = Vehiculo(placa, "", 0, 0)
@@ -244,16 +258,12 @@ def __procesar_eliminar_vehiculo(placa: str):
 
 def __formulario_mostrar_informacion_vehiculo():
     __limpiar_formulario()
-    #MOSTRAR LOS DATOS ACTUALES
-    Label(frame_formulario, text="FORMULARIO PARA MOSTRAR INFORMACION DE VEHICULO", foreground="red").grid(row=0, columnspan=2, padx=5, pady=5)
-    Label(frame_formulario, text="Placa: ").grid(row=1, column=0, padx=5, pady=5)
-    placa = StringVar()
-    placa_entry = Entry(frame_formulario, textvariable=placa)
-    placa_entry.grid(row=1, column=1, padx=5, pady=5)
-    Button(frame_formulario, text="Enviar", command=lambda: __procesar_mostrar_informacion_vehiculo(placa)).grid(row=2, columnspan=3, pady=10)
+    arbol_vehiculos.mostrar_placas(frame_formulario)
+    Label(frame_formulario, text="FORMULARIO PARA MOSTRAR INFORMACION DE VEHICULO", foreground="red").grid(row=1, columnspan=2, padx=5, pady=5)
+    Button(frame_formulario, text="Mostrar Informacion", command=lambda: __procesar_mostrar_informacion_vehiculo()).grid(row=2, columnspan=3, pady=10)
 
-def __procesar_mostrar_informacion_vehiculo(placa: str):
-    print(placa)
+def __procesar_mostrar_informacion_vehiculo():
+    arbol_vehiculos.mostrar_informacion()
 
 
 
@@ -285,21 +295,25 @@ def __formulario_agregar_viaje():
     destino = StringVar()
     destino_entry = Entry(frame_formulario, textvariable=destino)
     destino_entry.grid(row=2, column=1, padx=5, pady=5)
-    Label(frame_formulario, text="Tiempo de Ruta: ").grid(row=3, column=0, padx=5, pady=5)
-    tiempo = StringVar()
-    tiempo_entry = Entry(frame_formulario, textvariable=tiempo)
-    tiempo_entry.grid(row=3, column=1, padx=5, pady=5)
-    Button(frame_formulario, text="Enviar", command=lambda: __procesar_agregar_viaje(origen.get(), destino.get(), tiempo.get())).grid(row=4, columnspan=3, pady=10)
+    Label(frame_formulario, text="DPI Cliente:").grid(row=3, column=0, padx=5, pady=5)
+    dpi = IntVar()
+    dpi_entry = Entry(frame_formulario, textvariable=dpi)
+    dpi_entry.grid(row=3, column=1, padx=5, pady=5)
+    Label(frame_formulario, text="Placa Vehiculo:").grid(row=4, column=0, padx=5, pady=5)
+    placa = StringVar()
+    placa_entry = Entry(frame_formulario, textvariable=placa)
+    placa_entry.grid(row=4, column=1, padx=5, pady=5)
+    Button(frame_formulario, text="Enviar", command=lambda: __procesar_agregar_viaje(origen.get(), destino.get(), dpi.get(), placa.get())).grid(row=5, columnspan=3, pady=10)
+    #SE DEBE MOSTRAR EL VIAJE EN GRAPHIZ
+    #ELIMINAR LA OPCION DE MOSTRAR ESTRUCTURA DE DATOS
 
-def __procesar_agregar_viaje(origen: str, destino: str, tiempo: str):
+def __procesar_agregar_viaje(origen: str, destino: str, doi: int, placa: str):
     pass
 
 
 
 menu_viaje = Menu(menu_barra, tearoff=0)
 menu_viaje.add_command(label="Agregar/Crear", command=__formulario_agregar_viaje)
-menu_viaje.add_separator()
-menu_viaje.add_command(label="Mostrar Estructura de Datos")
 menu_barra.add_cascade(label="Viaje", menu=menu_viaje)
 
 

@@ -1,6 +1,7 @@
 from .NodoArbolB import NodoArbolB
 from ..models.Vehiculo import Vehiculo
-from tkinter import messagebox
+from tkinter import messagebox, Frame, ttk
+from collections import deque   # Servira para RECORRER el arbol por niveles e ir mostrando la informacion de las claves
 
 class ArbolB:
     def __init__(self, orden: int):
@@ -184,11 +185,6 @@ class ArbolB:
 
 
 
-    def modificar_vehiculo(self, placa: str):
-        pass
-
-
-
     def __buscar_vehiculo(self, nodo: NodoArbolB, placa: str) -> Vehiculo:
         i: int = 0
         while i < self.__orden-1 and nodo.get_claves()[i].get_placa() < placa:
@@ -204,5 +200,70 @@ class ArbolB:
 
 
 
-    def __recorrer_arbol(self) -> None:
-        pass
+    def recorrer_arbol(self, frame_formulario: Frame) -> None:
+        cola: deque = deque([self.__raiz])  # Inicializa la cola con la raíz
+        tabla = ttk.Treeview(frame_formulario, columns=("col1", "col2", "col3"))
+        tabla.grid(row=0, padx=5, pady=5)
+        tabla.column("#0", width=150)
+        tabla.column("col1", width=150, anchor="center")
+        tabla.column("col2", width=150, anchor="center")
+        tabla.column("col3", width=150, anchor="center")
+        tabla.heading("#0", text="Placa", anchor="center")
+        tabla.heading("col1", text="Marca", anchor="center")
+        tabla.heading("col2", text="Modelo", anchor="center")
+        tabla.heading("col3", text="Precio/segundo", anchor="center")
+        while cola:
+            nodo: NodoArbolB = cola.popleft()   # Extrae el nodo actual
+            for vehiculo in nodo.get_claves():
+                tabla.insert("", "end", text=vehiculo.get_placa(), values=(vehiculo.get_marca(), vehiculo.get_modelo(), vehiculo.get_precio()))
+            
+            # Encola los hijos no nulos
+            for hijo in nodo.get_hijos():
+                if hijo != None:
+                    cola.append(hijo)
+
+
+
+    def mostrar_placas(self, frame_formulario: Frame) -> None:
+        cola: deque = deque([self.__raiz])  # Inicializa la cola con la raíz
+        placas: list[str] = []
+        while cola:
+            nodo: NodoArbolB = cola.popleft()   # Extrae el nodo actual
+            for vehiculo in nodo.get_claves():
+                placas.append(vehiculo.get_placa())
+            
+            # Encola los hijos no nulos
+            for hijo in nodo.get_hijos():
+                if hijo != None:
+                    cola.append(hijo)
+        self.__lista_placas = ttk.Combobox(frame_formulario, width="10", values=placas, state="readonly")
+        self.__lista_placas.grid(row=0, padx=5, pady=5)
+
+
+
+    def modificar_vehiculo(self, vehiculo_modificado: Vehiculo) -> None:
+        vehiculo_actual: Vehiculo = self.__buscar_vehiculo(self.__raiz, vehiculo_modificado.get_placa())
+        if vehiculo_actual == None:
+            messagebox.showerror("ERROR!!!", "No se Encontro el Vehiculo para Modificar")
+            return
+
+        vehiculo_actual.set_marca(vehiculo_modificado.get_marca())
+        vehiculo_actual.set_modelo(vehiculo_modificado.get_modelo())
+        vehiculo_actual.set_precio(vehiculo_modificado.get_precio())
+        messagebox.showinfo("EXITO!!!", "Vehiculo Modificado Exitosamente")
+
+
+
+    def mostrar_informacion(self) -> None:
+        if self.__lista_placas.get() != "":
+            vehiculo_a_mostrar: Vehiculo = self.__buscar_vehiculo(self.__raiz, self.__lista_placas.get())
+            if vehiculo_a_mostrar != None:
+                messagebox.showinfo(f"Placa: {self.__lista_placas.get()}", f"""Placa: {vehiculo_a_mostrar.get_placa()}
+    Marca: {vehiculo_a_mostrar.get_marca()}
+    Modelo: {vehiculo_a_mostrar.get_modelo()}
+    Precio: {vehiculo_a_mostrar.get_precio()}""")
+                return
+            messagebox.showerror("ERROR!!!", "No se Encontro el Vehiculo con la Placa Seleccionada")
+            return
+        messagebox.showwarning("CUIDADO!!!", "Debe seleccionar una Placa valida dentro del listado")
+            

@@ -1,14 +1,17 @@
 import Cliente, Vehiculo, Ruta;
+from ..Grafo.Lista.Lista import Lista
+from ..Grafo.ListaAdyacencia import ListaAdyacencia
 
 class Viaje:
-    def __init__(self,id: int, origen: str, destino: str, fecha: str, cliente: Cliente, vehiculo: Vehiculo, ruta: Ruta):
+    def __init__(self,id: int, origen: str, destino: str, cliente: Cliente, vehiculo: Vehiculo):
         self.__id: int = id
         self.__origen: str = origen
         self.__destino: str = destino
-        self.__fecha: str = fecha
+        #self.__fecha: str = fecha
         self.__cliente: Cliente = cliente
         self.__vehiculo: Vehiculo = vehiculo
-        self.__ruta: Ruta = ruta
+        #self.__ruta: Ruta = ruta
+        self.__ruta_corta: Lista = None
 
 
 
@@ -36,11 +39,11 @@ class Viaje:
 
 
 
-    def get_fecha(self) -> str:
+    '''def get_fecha(self) -> str:
         return self.__fecha
     
     def set_fecha(self, fecha: str) -> None:
-        self.__fecha = fecha
+        self.__fecha = fecha'''
 
 
 
@@ -60,8 +63,21 @@ class Viaje:
 
     
 
-    def get_ruta(self) -> Ruta:
+    '''def get_ruta(self) -> Ruta:
         return self.__ruta
     
     def set_ruta(self, ruta: Ruta) -> None:
-        self.__ruta = ruta
+        self.__ruta = ruta'''
+    
+
+
+    def get_ruta_corta(self) -> Lista:
+        return self.__ruta_corta
+    
+    def set_ruta_corta(self, ruta_corta: Lista) -> None:
+        self.__ruta_corta = ruta_corta
+
+
+
+    def generar_ruta_corta(self, grafo: ListaAdyacencia):
+        self.__ruta_corta = grafo.obtener_ruta_corta(self.__origen, self.__destino)
